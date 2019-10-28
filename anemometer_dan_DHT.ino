@@ -295,6 +295,7 @@ void WindSpeed()
 speedwind = ((2 * pi * radio * RPM)/60) / 1000; // Calculate wind speed on m/s
 }
 
+
 void addcount()
 {
 counter++;
