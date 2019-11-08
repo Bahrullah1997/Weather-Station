@@ -118,7 +118,7 @@ dht.begin();
     myFile.println("Date,Time,RPM,WindSpeed,Temperature,Humidity");
   }
   myFile.close();
-
+  displayOLED();
 }
 
 void loop(){
@@ -144,20 +144,26 @@ void loop(){
 
 void displayOLED() 
 {
+
 display.clearDisplay();
 display.setTextSize(1); // Normal 1:1 pixel scale
 display.setTextColor(WHITE); // Draw white text
-display.setCursor(0,0); // Start at top-left corner
+display.setCursor(70,0); // Start at top-left corner
+DateTime now = rtc.now();
+display.print(now.hour());
+display.print(":");
+display.print(now.minute());
+display.print(":");
+display.println(now.second());
 display.print("Suhu: ");
 display.print(t); // Draw 'inverse' text
 display.println(" *C");
 display.print("Klmbpn: ");
 display.print(h);
 display.println(" %");
-display.println(" ");
 display.print("Kec Angin: ");
 display.print(speedwind);
-display.print(" m/s");//tulis tulisan "BETTER"
+display.println(" m/s");//tulis tulisan "BETTER"
 display.display();
 }
 
@@ -171,9 +177,9 @@ void loggingSensor() {
     myFile.print(",");
     myFile.print(speedwind);
     myFile.print(",");
-    myFile.print(h);
-    myFile.print(",");
     myFile.print(t);
+    myFile.print(",");
+    myFile.print(h);
     myFile.println(",");    
     }
   else {
@@ -201,10 +207,15 @@ void loggingTime() {
     myFile.print(',');
     myFile.print(now.hour(), DEC);
     myFile.print(':');
+    display.print(now.hour(), DEC);
+    display.print(':');
     myFile.print(now.minute(), DEC);
     myFile.print(':');
+    display.print(now.minute(), DEC);
+    display.print(':');
     myFile.print(now.second(), DEC);
     myFile.print(",");
+    display.print(now.second(), DEC);
   }
   Serial.print(now.year(), DEC);
   Serial.print('/');
@@ -213,9 +224,14 @@ void loggingTime() {
   Serial.println(now.day(), DEC);
   Serial.print(now.hour(), DEC);
   Serial.print(':');
+  display.print(now.hour(), DEC);
+  display.print(':');
   Serial.print(now.minute(), DEC);
   Serial.print(':');
+  display.print(now.minute(), DEC);
+  display.print(':');
   Serial.println(now.second(), DEC);
+  display.print(now.second(), DEC);
   myFile.close();
   //delay(1000);
 }
